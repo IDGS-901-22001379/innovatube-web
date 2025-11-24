@@ -1,0 +1,483 @@
+:root {
+  --purple-900: #4b0081;
+  --purple-800: #650099;
+  --purple-700: #7f00b2;
+  --purple-500: #ab3ed8;
+  --purple-300: #d86aff;
+
+  --bg-dark: #05020b;
+  --text-light: #f7f7ff;
+  --text-muted: #b8b8d9;
+  --card-radius: 18px;
+
+  --it-bg-body: #05020b;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+/* Fondo general tipo neon morado */
+body {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+    sans-serif;
+  background: radial-gradient(circle at top left, var(--purple-700), #000) fixed,
+    radial-gradient(circle at bottom right, var(--purple-300), #000) fixed, #000;
+  color: var(--text-light);
+}
+
+/* ==== LOGIN / AUTH PAGE ==== */
+
+.auth-page {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1.5rem;
+  overflow: hidden;
+}
+
+/* Brillo geométrico de fondo */
+.auth-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    135deg,
+    rgba(75, 0, 129, 0.9),
+    rgba(127, 0, 178, 0.85),
+    rgba(216, 106, 255, 0.75)
+  );
+  opacity: 0.35;
+  mix-blend-mode: screen;
+  pointer-events: none;
+}
+
+/* Wrapper con marco neón */
+.auth-card-wrapper {
+  position: relative;
+  z-index: 1;
+  max-width: 420px;
+  width: 100%;
+  border-radius: 28px;
+  padding: 3px; /* grosor del borde neón */
+  background: linear-gradient(
+    135deg,
+    var(--purple-900),
+    var(--purple-500),
+    var(--purple-300)
+  );
+  box-shadow: 0 0 25px rgba(216, 106, 255, 0.8),
+    0 0 60px rgba(127, 0, 178, 0.9);
+}
+
+/* Tarjeta principal */
+.auth-card {
+  background: radial-gradient(circle at top, #141021, #05020b);
+  border-radius: 25px;
+  box-shadow: 0 18px 45px rgba(0, 0, 0, 0.9);
+  color: var(--text-light);
+}
+
+/* Avatar circular */
+.auth-avatar {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--purple-500), var(--purple-300));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 1.4rem;
+  color: #1a1024;
+  box-shadow: 0 0 0 4px rgba(171, 62, 216, 0.4);
+}
+
+/* Títulos */
+.auth-title {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: var(--purple-300);
+}
+
+.auth-subtitle {
+  font-size: 0.95rem;
+  color: var(--text-light);
+  opacity: 0.9;
+}
+
+/* Inputs y labels */
+.auth-label {
+  font-size: 0.9rem;
+  color: var(--text-light);
+}
+
+.auth-input {
+  background: rgba(10, 6, 26, 0.9);
+  border: 1px solid rgba(171, 62, 216, 0.7);
+  border-radius: 999px;
+  color: var(--text-light);
+  padding-left: 1rem;
+  padding-right: 1rem;
+  height: 44px;
+  font-size: 0.95rem;
+  box-shadow: 0 0 12px rgba(171, 62, 216, 0.5);
+}
+
+.auth-input::placeholder {
+  color: rgba(255, 255, 255, 0.4);
+}
+
+.auth-input:focus {
+  border-color: var(--purple-300);
+  box-shadow: 0 0 18px rgba(216, 106, 255, 0.9),
+    0 0 28px rgba(127, 0, 178, 0.7);
+  outline: none;
+}
+
+/* Botón morado principal */
+.auth-btn {
+  background: linear-gradient(90deg, var(--purple-800), var(--purple-500));
+  border: none;
+  border-radius: 999px;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  color: #ffffff;
+  box-shadow: 0 0 18px rgba(216, 106, 255, 0.8);
+}
+
+.auth-btn:hover:not(:disabled) {
+  background: linear-gradient(90deg, var(--purple-900), var(--purple-700));
+  filter: brightness(1.05);
+  box-shadow: 0 0 22px rgba(216, 106, 255, 1),
+    0 0 32px rgba(127, 0, 178, 0.9);
+}
+
+.auth-btn:disabled {
+  opacity: 0.85;
+}
+
+/* Links (Forgot / Sign-Up) más grandes y blancos */
+.auth-links {
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+.auth-link {
+  color: #ffffff;
+  text-decoration: none;
+}
+
+.auth-link:hover {
+  color: var(--purple-300);
+  text-shadow: 0 0 6px rgba(216, 106, 255, 0.9);
+}
+
+/* reCAPTCHA */
+.auth-recaptcha-wrapper {
+  display: flex;
+  justify-content: center;
+}
+
+/* Placeholder viejo, por si se usa en algún lado más */
+.auth-recaptcha-placeholder {
+  border-radius: 10px;
+  border: 1px dashed rgba(171, 62, 216, 0.5);
+  padding: 0.4rem 0.6rem;
+  color: var(--text-muted);
+}
+
+/* Mobile tweaks */
+@media (max-width: 576px) {
+  .auth-card-wrapper {
+    max-width: 100%;
+  }
+
+  .auth-card {
+    padding-inline: 0.25rem;
+  }
+}
+
+/* ========================================================= */
+/* ====== ESTILOS PARA LAYOUT, SIDEBAR Y FAVORITOS ======== */
+/* ========================================================= */
+
+/* Layout general */
+.it-app {
+  min-height: 100vh;
+  display: flex;
+}
+
+/* Sidebar */
+.it-sidebar {
+  min-height: 100vh;
+  padding: 1.2rem 0.9rem;
+  background: linear-gradient(180deg, var(--purple-900), var(--purple-700));
+  color: #fff;
+  box-shadow: 0 0 25px rgba(0, 0, 0, 0.35);
+  border-radius: 0 1.4rem 1.4rem 0;
+  display: flex;
+  flex-direction: column;
+  position: sticky;
+  top: 0;
+  z-index: 1020;
+  transition: all 0.25s ease;
+}
+
+/* Ancho normal (desktop) */
+.it-sidebar-open {
+  width: 250px;
+}
+
+/* Compacto/cerrado */
+.it-sidebar-collapsed {
+  width: 80px;
+}
+
+/* En móvil el sidebar se oculta/desplaza (flotante) */
+@media (max-width: 991.98px) {
+  .it-sidebar {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    top: 0;
+  }
+
+  .it-sidebar-open {
+    transform: translateX(0);
+  }
+
+  .it-sidebar-collapsed {
+    transform: translateX(-100%);
+  }
+}
+
+.it-sidebar-header {
+  min-height: 40px;
+}
+
+.it-logo {
+  width: 36px;
+  height: 36px;
+  border-radius: 1.2rem;
+  background: rgba(0, 0, 0, 0.16);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Icono tipo YouTube */
+.it-logo-youtube {
+  width: 26px;
+  height: 18px;
+  border-radius: 6px;
+  background: #ff0000;
+  position: relative;
+}
+
+.it-logo-youtube::before {
+  content: "";
+  position: absolute;
+  left: 9px;
+  top: 4px;
+  border-style: solid;
+  border-width: 5px 0 5px 9px;
+  border-color: transparent transparent transparent #ffffff;
+}
+
+.it-sidebar-title {
+  font-size: 1rem;
+}
+
+.it-sidebar-nav {
+  margin-top: 1.4rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.it-sidebar-link {
+  border: none;
+  background: transparent;
+  color: #f5eaff;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  padding: 0.6rem 0.75rem;
+  border-radius: 999px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.it-sidebar-link i {
+  font-size: 1rem;
+}
+
+.it-sidebar-link:hover {
+  background: rgba(255, 255, 255, 0.18);
+  transform: translateX(2px);
+}
+
+.it-sidebar-link.active {
+  background: #ffffff;
+  color: var(--purple-900);
+}
+
+.it-sidebar-footer {
+  margin-top: 1.2rem;
+}
+
+/* --- Modo colapsado (solo iconos) --- */
+.it-sidebar-collapsed .it-sidebar-title,
+.it-sidebar-collapsed .it-sidebar-text {
+  display: none !important;
+}
+
+.it-sidebar-collapsed .it-sidebar-link {
+  justify-content: center;
+  padding-inline: 0.5rem;
+}
+
+.it-sidebar-collapsed .it-logo {
+  margin-inline: auto;
+}
+
+/* Botón de logout: solo icono cuando está colapsado */
+.it-sidebar-footer .btn i {
+  margin-right: 0.4rem;
+}
+
+.it-sidebar-collapsed .it-sidebar-footer .btn span {
+  display: none;
+}
+
+/* Main / topbar */
+.it-main {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+/* Barra superior */
+.it-topbar {
+  height: 56px;
+  background: #111827;
+  border-bottom: 1px solid rgba(148, 163, 184, 0.25);
+  color: #e5e7eb;
+}
+
+.it-topbar-title {
+  font-size: 1.05rem;
+  font-weight: 600;
+}
+
+.it-main-content {
+  padding: 1.5rem 1.5rem 2rem;
+}
+
+/* Responsive padding contenido principal */
+@media (max-width: 767.98px) {
+  .it-main-content {
+    padding: 1rem 1rem 1.5rem;
+  }
+}
+
+/* === Tarjetas de favoritos en grid === */
+
+.it-favorites-card {
+  border-radius: 1rem;
+  border: none;
+  box-shadow: 0 10px 25px rgba(15, 23, 42, 0.4);
+}
+
+.it-favorites-card-header {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.it-favorites-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.75rem;
+}
+
+/* A partir de sm hacemos columnas múltiples */
+@media (min-width: 576px) {
+  .it-favorites-grid {
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  }
+}
+
+.it-favorite-item {
+  border-radius: 0.9rem;
+  overflow: hidden;
+  border: 1px solid rgba(148, 163, 184, 0.3);
+  background: #ffffff;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.12s ease, box-shadow 0.12s ease;
+}
+
+.it-favorite-item:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(15, 23, 42, 0.5);
+}
+
+.it-favorite-thumb {
+  width: 100%;
+  height: 130px;
+  object-fit: cover;
+}
+
+.it-favorite-body {
+  padding: 0.7rem 0.7rem 0.75rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.it-favorite-title {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #111827;
+}
+
+.it-favorite-channel {
+  font-size: 0.78rem;
+  color: #64748b;
+}
+
+.it-favorite-actions {
+  margin-top: 0.35rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* Botón pequeño en tarjetas */
+.it-btn-outline-danger-soft {
+  border-radius: 999px;
+  padding: 0.15rem 0.65rem;
+  font-size: 0.75rem;
+  border-color: rgba(220, 38, 38, 0.2);
+  color: #dc2626;
+  background: transparent;
+}
+
+.it-btn-outline-danger-soft:hover {
+  background: rgba(220, 38, 38, 0.1);
+}
