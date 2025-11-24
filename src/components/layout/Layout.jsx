@@ -4,6 +4,24 @@ import { useState } from "react";
 import { AuthAPI } from "../../services/auth.api";
 import { sessionStore } from "../../services/http";
 
+// Ítems del sidebar con sus iconos
+const navItems = [
+  {
+    key: "dashboard",
+    type: "link",
+    to: "/",
+    label: "Dashboard",
+    icon: "bi-house",
+  },
+  {
+    key: "lists",
+    type: "link",
+    to: "/favoritos",
+    label: "Mis listas",
+    icon: "bi-grid-3x3-gap",
+  },
+];
+
 export default function Layout() {
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const navigate = useNavigate();
@@ -35,54 +53,14 @@ export default function Layout() {
     sidebarOpen ? "it-sidebar-open" : "it-sidebar-collapsed",
   ].join(" ");
 
-  // === Items del menú, con iconos tipo ejemplo ===
-  const navItems = [
-    {
-      key: "dashboard",
-      to: "/",
-      label: "Dashboard",
-      icon: "bi bi-house-door", // icono Home
-      type: "link",
-    },
-    {
-      key: "lists",
-      label: "Mis listas",
-      icon: "bi bi-grid-3x3-gap", // icono tipo grid
-      type: "button",
-    },
-    {
-      key: "folder",
-      label: "Biblioteca",
-      icon: "bi bi-folder2-open", // icono folder
-      type: "button",
-    },
-    {
-      key: "tasks",
-      label: "Tareas",
-      icon: "bi bi-check2-square", // icono checklist
-      type: "button",
-    },
-    {
-      key: "calendar",
-      label: "Calendario",
-      icon: "bi bi-calendar3", // icono calendario
-      type: "button",
-    },
-  ];
-
-  // Render genérico de cada item
+  // Render de cada ítem de navegación
   const renderNavItem = (item) => {
-    const showText = sidebarOpen; // sólo mostramos texto cuando está abierto
+    const showText = sidebarOpen; // texto solo cuando el sidebar está abierto
 
-    const content = (
-      <>
-        <i className={item.icon + " me-lg-2"} />
-        {showText && (
-          <span className="it-sidebar-text d-none d-lg-inline">
-            {item.label}
-          </span>
-        )}
-      </>
+    const iconElement = (
+      <span className="me-lg-2 d-flex align-items-center justify-content-center">
+        <i className={`bi ${item.icon}`} />
+      </span>
     );
 
     if (item.type === "link") {
@@ -90,27 +68,28 @@ export default function Layout() {
         <NavLink
           key={item.key}
           to={item.to}
-          end={item.to === "/"}
+          end
           className={({ isActive }) =>
             "it-sidebar-link" + (isActive ? " active" : "")
           }
         >
-          {content}
+          {iconElement}
+          {showText && <span className="it-sidebar-text">{item.label}</span>}
         </NavLink>
       );
     }
 
-    // botones “dummy” por ahora
     return (
       <button
         key={item.key}
         type="button"
         className="it-sidebar-link"
         onClick={() => {
-          /* luego puedes abrir modales o rutas */
+          console.log("Click en", item.key);
         }}
       >
-        {content}
+        {iconElement}
+        {showText && <span className="it-sidebar-text">{item.label}</span>}
       </button>
     );
   };
@@ -119,24 +98,25 @@ export default function Layout() {
     <div className="it-app d-flex">
       {/* Sidebar */}
       <aside className={sidebarClass}>
-        {/* Logo / título */}
+        {/* Header del sidebar */}
         <div className="it-sidebar-header d-flex align-items-center mb-4">
-          <div className="d-flex align-items-center">
-            <div className="it-logo me-2">
-              <div className="it-logo-youtube" />
+          {/* Logo + texto SOLO en desktop y SOLO cuando está abierto */}
+          {sidebarOpen && (
+            <div className="d-none d-lg-flex align-items-center">
+              <div className="it-logo me-2">
+                <div className="it-logo-youtube" />
+              </div>
+              <span className="it-sidebar-title fw-bold">InnovaTube</span>
             </div>
-            {sidebarOpen && (
-              <span className="it-sidebar-title fw-bold d-none d-lg-inline">
-                InnovaTube
-              </span>
-            )}
-          </div>
+          )}
 
-          {/* botón para colapsar (sólo desktop) */}
+          {/* Flecha para abrir/cerrar: visible en desktop y móvil,
+              y se queda flotando cuando el sidebar está pequeño */}
           <button
             type="button"
-            className="btn btn-sm btn-outline-light ms-auto d-none d-lg-inline-flex"
             onClick={handleToggleSidebar}
+            className="ms-auto d-flex align-items-center justify-content-center btn btn-sm btn-outline-light rounded-circle"
+            style={{ width: 40, height: 40 }}
           >
             <i
               className={
@@ -168,14 +148,12 @@ export default function Layout() {
             onClick={handleLogout}
           >
             <i className="bi bi-box-arrow-right me-lg-1" />
-            {sidebarOpen && (
-              <span className="d-none d-lg-inline">Cerrar sesión</span>
-            )}
+            <span className="d-none d-lg-inline">Cerrar sesión</span>
           </button>
         </div>
       </aside>
 
-      {/* Backdrop móvil */}
+      {/* Backdrop en móvil: al tocar fuera del menú se cierra */}
       <div
         className={
           "it-sidebar-backdrop d-lg-none " + (sidebarOpen ? "show" : "")
@@ -185,8 +163,10 @@ export default function Layout() {
 
       {/* Contenedor principal */}
       <div className="it-main flex-grow-1 d-flex flex-column">
+        {/* Topbar */}
         <header className="it-topbar d-flex align-items-center px-3 px-lg-4">
           <div className="d-flex align-items-center gap-2">
+            {/* Botón hamburguesa SOLO en móvil */}
             <button
               type="button"
               className="btn btn-outline-secondary btn-sm d-lg-none"
@@ -198,7 +178,19 @@ export default function Layout() {
           </div>
         </header>
 
-        <main className="it-main-content flex-grow-1">
+        {/* Contenido: tocar en móvil cierra el menú si está abierto */}
+        <main
+          className="it-main-content flex-grow-1"
+          onClick={() => {
+            if (
+              typeof window !== "undefined" &&
+              window.innerWidth < 992 &&
+              sidebarOpen
+            ) {
+              setSidebarOpen(false);
+            }
+          }}
+        >
           <Outlet />
         </main>
       </div>
